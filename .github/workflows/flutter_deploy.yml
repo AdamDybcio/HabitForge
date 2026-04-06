@@ -1,0 +1,67 @@
+name: Deploy & Build Flutter App
+
+on:
+  workflow_run:
+    workflows: ["Application ON Push & PR DO Code check"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'master'
+
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Cache pub
+        uses: actions/cache@v3
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build Web
+        run: flutter build web --release --base-href /${{ github.event.repository.name }}/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+
+      # --- Build Android APK (temporary off) ---
+      # - name: Build Android APK
+      #   run: flutter build apk --release
+
+      # - name: Rename and Upload APK artifact
+      #   run: |
+      #     mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/Unordered.apk
+      #   shell: bash
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Unordered.apk
+      #     path: build/app/outputs/flutter-apk/Unordered.apk
+
+      # --- Build iOS IPA (temporary off) ---
+      # - name: Build iOS IPA
+      #   run: flutter build ipa --release
+
+      # - name: Rename and Upload IPA artifact
+      #   run: |
+      #     mv build/ios/ipa/*.ipa build/ios/ipa/Unordered.ipa
+      #   shell: bash
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Unordered.ipa
+      #     path: build/ios/ipa/Unordered.ipa

@@ -12,6 +12,9 @@ class Habit extends Equatable {
   /// List of dates when the habit was completed.
   final List<DateTime> completedDays;
 
+  @override
+  List<Object?> get props => [id, name, completedDays];
+
   /// Creates a new [Habit] instance.
   const Habit({
     required this.id,
@@ -66,7 +69,4 @@ class Habit extends Equatable {
 
     return streak;
   }
-
-  @override
-  List<Object?> get props => [id, name, completedDays];
 }

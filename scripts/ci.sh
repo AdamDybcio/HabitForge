@@ -1,20 +1,44 @@
 #!/bin/bash
+# Simulate GitHub Actions Flutter CI locally
+# Stops on first failure (like GH Actions)
 
-echo "📦 Installing dependencies..."
-flutter pub get || exit 1
+set -e  # exit on any error
+echo "Starting local Flutter CI simulation..."
 
-echo "🔍 Running analyzer..."
-flutter analyze || exit 1
-
-echo "🧹 Checking formatting..."
-dart format . --set-exit-if-changed || exit 1
-
-echo "🧠 Running custom lint..."
-if grep -q custom_lint pubspec.yaml; then
-  dart run custom_lint || exit 1
+# Check if we are in a Flutter project
+if [ ! -f "pubspec.yaml" ]; then
+  echo "❌ pubspec.yaml not found! Are you in a Flutter project root?"
+  exit 1
 fi
 
-echo "🧪 Running tests..."
-flutter test || exit 1
+echo "✅ pubspec.yaml found"
 
-echo "✅ CI passed!"
+# --- Get dependencies ---
+echo "📦 Getting dependencies..."
+flutter pub get
+
+# --- Run static code analysis ---
+echo "🔍 Running Dart analyzer..."
+flutter analyze
+
+# --- Run custom lint ---
+if command -v dart &> /dev/null; then
+  echo "📝 Running custom_lint..."
+  dart run custom_lint
+else
+  echo "⚠️ Dart not found, skipping custom_lint"
+fi
+
+# --- Check formatting ---
+echo "🎨 Checking code formatting..."
+dart format . --set-exit-if-changed
+
+# --- Run tests ---
+if [ -d "test" ]; then
+  echo "🧪 Running tests..."
+  flutter test -r expanded
+else
+  echo "⚠️ No test folder found, skipping tests"
+fi
+
+echo "✅ Local Flutter CI simulation passed!"

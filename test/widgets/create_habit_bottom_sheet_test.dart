@@ -14,7 +14,10 @@ void main() {
 
   group('CreateHabitBottomSheet', () {
     testWidgets('validates required name', (tester) async {
-      final controller = HomeController(storage: InMemoryHabitStorageService());
+      final controller = HomeController(
+        storage: InMemoryHabitStorageService(),
+        enableDayRolloverTicker: false,
+      );
 
       await tester.pumpWidget(
         wrap(CreateHabitBottomSheet(controller: controller)),
@@ -33,6 +36,7 @@ void main() {
       final controller = HomeController(
         storage: storage,
         uuid: FixedUuid(['habit-1']),
+        enableDayRolloverTicker: false,
       );
 
       await tester.pumpWidget(
@@ -67,7 +71,10 @@ void main() {
         completedDays: <DateTime>[],
       );
       final storage = InMemoryHabitStorageService(initialHabits: [existing]);
-      final controller = HomeController(storage: storage);
+      final controller = HomeController(
+        storage: storage,
+        enableDayRolloverTicker: false,
+      );
       await controller.initialize();
 
       await tester.pumpWidget(

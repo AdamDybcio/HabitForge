@@ -16,7 +16,10 @@ void main() {
     testWidgets('shows empty state and triggers create callback', (
       tester,
     ) async {
-      final controller = HomeController(storage: InMemoryHabitStorageService());
+      final controller = HomeController(
+        storage: InMemoryHabitStorageService(),
+        enableDayRolloverTicker: false,
+      );
       var createTapped = false;
 
       await tester.pumpWidget(
@@ -45,6 +48,7 @@ void main() {
       final controller = HomeController(
         storage: storage,
         uuid: FixedUuid(['habit-1']),
+        enableDayRolloverTicker: false,
       );
       await controller.addHabit(name: 'Morning walk', description: '20 min');
 
@@ -87,6 +91,7 @@ void main() {
       final controller = HomeController(
         storage: storage,
         uuid: FixedUuid(['habit-1']),
+        enableDayRolloverTicker: false,
       );
       await controller.addHabit(name: 'Read', iconName: 'book');
 

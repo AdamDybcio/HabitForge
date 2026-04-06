@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 
 class ProfileCalendarWeekLabels extends StatelessWidget {
   static const _weekLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -10,6 +9,8 @@ class ProfileCalendarWeekLabels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: _weekLabels
           .map(
@@ -18,7 +19,7 @@ class ProfileCalendarWeekLabels extends StatelessWidget {
                 child: Text(
                   label,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: AppColors.onSurfaceVariant,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),

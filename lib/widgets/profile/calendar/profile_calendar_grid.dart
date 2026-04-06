@@ -4,7 +4,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:habit_forge/core/extensions/date_extensions.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 
 class ProfileCalendarGrid extends StatelessWidget {
   static const _weekLength = 7;
@@ -106,6 +105,7 @@ class _ProfileCalendarDayCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isToday = day.isSameDay(DateTime.now());
     final isSelected = day.isSameDay(selectedDay);
     final intensity = math.min(count / _intensityDivisor, _maxIntensity);
@@ -116,9 +116,9 @@ class _ProfileCalendarDayCell extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
         decoration: BoxDecoration(
-          color: _backgroundColor(isSelected, intensity),
+          color: _backgroundColor(colorScheme, isSelected, intensity),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
-          border: Border.all(color: _borderColor(isToday)),
+          border: Border.all(color: _borderColor(colorScheme, isToday)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +127,7 @@ class _ProfileCalendarDayCell extends StatelessWidget {
               day.day.toString(),
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.w700,
-                color: isSelected ? Colors.white : AppColors.onSurface,
+                color: isSelected ? Colors.white : colorScheme.onSurface,
               ),
             ),
             if (count > 0)
@@ -136,7 +136,7 @@ class _ProfileCalendarDayCell extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: isSelected
                       ? Colors.white.withValues(alpha: _selectedCountOpacity)
-                      : AppColors.onSurfaceVariant,
+                      : colorScheme.onSurfaceVariant,
                 ),
               ),
           ],
@@ -145,23 +145,27 @@ class _ProfileCalendarDayCell extends StatelessWidget {
     );
   }
 
-  Color _backgroundColor(bool isSelected, double intensity) {
+  Color _backgroundColor(
+    ColorScheme colorScheme,
+    bool isSelected,
+    double intensity,
+  ) {
     if (isSelected) {
-      return AppColors.primary;
+      return colorScheme.primary;
     }
 
-    return AppColors.primary.withValues(
+    return colorScheme.primary.withValues(
       alpha: count == 0
           ? _emptyDayOpacity
           : _baseDayOpacity + intensity * _intensityOpacityScale,
     );
   }
 
-  Color _borderColor(bool isToday) {
+  Color _borderColor(ColorScheme colorScheme, bool isToday) {
     if (isToday) {
-      return AppColors.primary.withValues(alpha: _todayBorderOpacity);
+      return colorScheme.primary.withValues(alpha: _todayBorderOpacity);
     }
 
-    return AppColors.outlineVariant.withValues(alpha: _defaultBorderOpacity);
+    return colorScheme.outlineVariant.withValues(alpha: _defaultBorderOpacity);
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
 import 'package:habit_forge/controllers/navigation_controller.dart';
+import 'package:habit_forge/controllers/theme_controller.dart';
 import 'package:habit_forge/core/theme/app_theme.dart';
 import 'package:habit_forge/services/habit_local_storage_service.dart';
 import 'package:habit_forge/views/main_navigation_screen.dart';
@@ -26,21 +27,30 @@ class HabitForgeApp extends StatelessWidget {
         ChangeNotifierProvider<NavigationController>(
           create: (_) => NavigationController(),
         ),
+        ChangeNotifierProvider<ThemeController>(
+          create: (_) => ThemeController()..initialize(),
+        ),
       ],
-      child: MaterialApp(
-        title: 'HabitForge',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('pl'),
-        ],
-        home: const MainNavigationScreen(),
+      child: Consumer<ThemeController>(
+        builder: (_, themeController, _) {
+          return MaterialApp(
+            title: 'HabitForge',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeController.themeMode,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('pl'),
+            ],
+            home: const MainNavigationScreen(),
+          );
+        },
       ),
     );
   }

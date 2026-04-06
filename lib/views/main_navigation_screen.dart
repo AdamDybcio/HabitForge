@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
 import 'package:habit_forge/controllers/navigation_controller.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 import 'package:habit_forge/views/home_screen.dart';
 import 'package:habit_forge/views/profile_screen.dart';
 import 'package:habit_forge/widgets/habit/create_habit_bottom_sheet.dart';
@@ -34,9 +33,11 @@ class MainNavigationScreen extends StatelessWidget {
         onPressed: () => _openCreateHabitSheet(context),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
         elevation: 10,
-        shadowColor: AppColors.onSurface.withValues(alpha: 0.08),
-        color: AppColors.surfaceContainerHigh,
+        shadowColor: Theme.of(
+          context,
+        ).colorScheme.onSurface.withValues(alpha: 0.08),
         height: _bottomBarHeight,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         shape: const CircularNotchedRectangle(),
@@ -95,7 +96,10 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? AppColors.primary : AppColors.onSurfaceVariant;
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = isSelected
+        ? colorScheme.primary
+        : colorScheme.onSurfaceVariant;
     final fontWeight = isSelected ? FontWeight.w700 : FontWeight.w600;
     final baseLabelStyle =
         Theme.of(context).textTheme.labelSmall ??
@@ -116,7 +120,7 @@ class _NavItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.surfaceContainerLowest
+                  ? colorScheme.surfaceContainerLowest
                   : Colors.transparent,
               borderRadius: const BorderRadius.all(Radius.circular(14)),
             ),

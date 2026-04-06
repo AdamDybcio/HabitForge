@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 
 /// Animated square toggle button for marking habit completion.
 class AnimatedCompletionToggleButton extends StatelessWidget {
@@ -20,6 +19,25 @@ class AnimatedCompletionToggleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final buttonColor = isDarkMode
+        ? (isCompleted
+              ? Color.alphaBlend(
+                  colorScheme.surface.withValues(alpha: 0.35),
+                  colorScheme.secondaryContainer,
+                )
+              : Color.alphaBlend(
+                  colorScheme.surface.withValues(alpha: 0.3),
+                  colorScheme.primaryContainer,
+                ))
+        : (isCompleted ? colorScheme.secondary : colorScheme.primary);
+    final iconColor = isDarkMode
+        ? (isCompleted
+              ? colorScheme.onSecondaryContainer
+              : colorScheme.onPrimaryContainer)
+        : Colors.white;
+
     return AnimatedScale(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOutBack,
@@ -28,7 +46,7 @@ class AnimatedCompletionToggleButton extends StatelessWidget {
         duration: const Duration(milliseconds: 260),
         curve: Curves.easeOutCubic,
         decoration: BoxDecoration(
-          color: isCompleted ? AppColors.secondary : AppColors.primary,
+          color: buttonColor,
           borderRadius: const BorderRadius.all(Radius.circular(14)),
         ),
         child: Material(
@@ -48,7 +66,7 @@ class AnimatedCompletionToggleButton extends StatelessWidget {
                   child: Icon(
                     isCompleted ? Icons.check : Icons.circle_outlined,
                     key: ValueKey<bool>(isCompleted),
-                    color: Colors.white,
+                    color: iconColor,
                   ),
                 ),
               ),

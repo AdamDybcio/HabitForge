@@ -13,13 +13,17 @@ class HomeEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(24),
-        decoration: const BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
-          borderRadius: BorderRadius.all(Radius.circular(_emptyCardRadius)),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerLowest,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(_emptyCardRadius),
+          ),
           boxShadow: AppEffects.ambientShadow,
         ),
         child: Column(
@@ -44,7 +48,7 @@ class HomeEmptyState extends StatelessWidget {
               'Start with one tiny routine and build your daily momentum.',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.onSurfaceVariant,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 16),

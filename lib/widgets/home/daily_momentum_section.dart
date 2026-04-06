@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 import 'package:habit_forge/widgets/home/components/animated_completion_progress.dart';
 import 'package:intl/intl.dart';
 
@@ -22,6 +21,7 @@ class DailyMomentumSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final localeTag = Localizations.localeOf(context).toLanguageTag();
     final formattedDate = DateFormat('EEEE, MMM d', localeTag).format(
       DateTime.now(),
@@ -34,7 +34,7 @@ class DailyMomentumSection extends StatelessWidget {
         Text(
           formattedDate.toUpperCase(),
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: AppColors.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
             letterSpacing: letterSpacing,
           ),
         ),
@@ -47,9 +47,9 @@ class DailyMomentumSection extends StatelessWidget {
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(18),
-          decoration: const BoxDecoration(
-            color: AppColors.surfaceContainerLow,
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerLow,
+            borderRadius: const BorderRadius.all(
               Radius.circular(_progressCardRadius),
             ),
           ),

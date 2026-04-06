@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 
 /// Frosted floating action button with subtle background blur.
 class BlurredAddHabitFab extends StatelessWidget {
@@ -18,11 +17,13 @@ class BlurredAddHabitFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ClipOval(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
         child: Material(
-          color: AppColors.surfaceContainerLowest.withValues(alpha: 0.88),
+          color: colorScheme.surfaceContainerLowest.withValues(alpha: 0.88),
           child: InkWell(
             onTap: onPressed,
             customBorder: const CircleBorder(),
@@ -32,7 +33,7 @@ class BlurredAddHabitFab extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: AppColors.primary.withValues(alpha: 0.35),
+                  color: colorScheme.primary.withValues(alpha: 0.35),
                 ),
                 boxShadow: const [
                   BoxShadow(
@@ -45,8 +46,8 @@ class BlurredAddHabitFab extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    AppColors.primary.withValues(alpha: 0.9),
-                    AppColors.primaryContainer.withValues(alpha: 0.88),
+                    colorScheme.primary.withValues(alpha: 0.9),
+                    colorScheme.primaryContainer.withValues(alpha: 0.88),
                   ],
                 ),
               ),

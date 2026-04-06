@@ -28,11 +28,13 @@ class ProfileMonthlyCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
-        borderRadius: BorderRadius.all(Radius.circular(24)),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLowest,
+        borderRadius: const BorderRadius.all(Radius.circular(24)),
         boxShadow: AppEffects.ambientShadow,
       ),
       child: Column(

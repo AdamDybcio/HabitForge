@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
 import 'package:habit_forge/controllers/navigation_controller.dart';
+import 'package:habit_forge/controllers/theme_controller.dart';
 import 'package:habit_forge/core/theme/app_theme.dart';
 import 'package:habit_forge/views/main_navigation_screen.dart';
 import 'package:integration_test/integration_test.dart';
@@ -26,9 +27,13 @@ void main() {
           ChangeNotifierProvider<NavigationController>(
             create: (_) => NavigationController(),
           ),
+          ChangeNotifierProvider<ThemeController>(
+            create: (_) => ThemeController(),
+          ),
         ],
         child: MaterialApp(
           theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           home: const MainNavigationScreen(),
         ),
       ),

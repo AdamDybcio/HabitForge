@@ -34,15 +34,20 @@ class HabitListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final deleteActionColor = isDarkMode
+        ? colorScheme.error
+        : colorScheme.tertiary;
     final isDoneToday = habit.isCompletedToday();
     final streak = habit.calculateStreak();
     final iconPalette = habitIconPaletteFromKey(habit.iconName);
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
-        borderRadius: BorderRadius.all(Radius.circular(_cardRadius)),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLowest,
+        borderRadius: const BorderRadius.all(Radius.circular(_cardRadius)),
         boxShadow: AppEffects.ambientShadow,
       ),
       child: Column(
@@ -70,7 +75,7 @@ class HabitListItem extends StatelessWidget {
               PopupMenuButton<_HabitAction>(
                 tooltip: 'Habit actions',
                 surfaceTintColor: Colors.transparent,
-                color: AppColors.surfaceContainerLowest,
+                color: colorScheme.surfaceContainerLowest,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
@@ -99,30 +104,38 @@ class HabitListItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const PopupMenuItem<_HabitAction>(
+                    PopupMenuItem<_HabitAction>(
                       value: _HabitAction.delete,
                       child: Row(
                         children: [
-                          Icon(Icons.delete_outline, color: AppColors.tertiary),
-                          SizedBox(width: 10),
-                          Text('Delete'),
+                          Icon(
+                            Icons.delete_outline,
+                            color: deleteActionColor,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Delete',
+                            style: isDarkMode
+                                ? TextStyle(color: deleteActionColor)
+                                : null,
+                          ),
                         ],
                       ),
                     ),
                   ];
                 },
-                child: const SizedBox(
+                child: SizedBox(
                   width: 34,
                   height: 34,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: colorScheme.surfaceContainerLow,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: Icon(
                       Icons.more_horiz,
                       size: 18,
-                      color: AppColors.onSurfaceVariant,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ),
@@ -136,7 +149,7 @@ class HabitListItem extends StatelessWidget {
             Text(
               habit.description,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.onSurfaceVariant,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ],
@@ -147,8 +160,8 @@ class HabitListItem extends StatelessWidget {
                 isDoneToday ? 'Completed today' : 'Tap to complete',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: isDoneToday
-                      ? AppColors.secondary
-                      : AppColors.onSurfaceVariant,
+                      ? colorScheme.secondary
+                      : colorScheme.onSurfaceVariant,
                 ),
               ),
               const Spacer(),

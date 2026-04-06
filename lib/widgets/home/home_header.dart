@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:habit_forge/controllers/theme_controller.dart';
 import 'package:habit_forge/core/theme/colors.dart';
+import 'package:provider/provider.dart';
 
-/// Top header with branded logo and theme-toggle placeholder.
+/// Top header with branded logo and theme toggle action.
 class HomeHeader extends StatelessWidget {
   static const _logoSize = 44.0;
   static const _iconSize = 22.0;
@@ -12,6 +14,9 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = context.watch<ThemeController>();
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Container(
@@ -33,20 +38,25 @@ class HomeHeader extends StatelessWidget {
           child: RichText(
             text: TextSpan(
               style: Theme.of(context).textTheme.titleLarge,
-              children: const [
-                TextSpan(text: 'Habit'),
+              children: [
+                const TextSpan(text: 'Habit'),
                 TextSpan(
                   text: 'Forge',
-                  style: TextStyle(color: AppColors.primary),
+                  style: TextStyle(color: colorScheme.primary),
                 ),
               ],
             ),
           ),
         ),
-        const IconButton(
-          onPressed: null,
-          tooltip: 'Przełącz motyw',
-          icon: Icon(Icons.dark_mode_outlined),
+        IconButton(
+          onPressed: themeController.toggleTheme,
+          tooltip: 'Change theme',
+          icon: Icon(
+            themeController.isDarkMode
+                ? Icons.light_mode_outlined
+                : Icons.dark_mode_outlined,
+            color: colorScheme.onSurfaceVariant,
+          ),
         ),
       ],
     );

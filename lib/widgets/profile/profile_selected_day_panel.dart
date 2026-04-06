@@ -19,14 +19,15 @@ class ProfileSelectedDayPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final dayLabel = DateFormat('EEE, MMM d').format(selectedDay);
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
-        borderRadius: BorderRadius.all(Radius.circular(24)),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLowest,
+        borderRadius: const BorderRadius.all(Radius.circular(24)),
         boxShadow: AppEffects.ambientShadow,
       ),
       child: Column(
@@ -41,7 +42,7 @@ class ProfileSelectedDayPanel extends StatelessWidget {
             Text(
               'No completed habits on this day.',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.onSurfaceVariant,
+                color: colorScheme.onSurfaceVariant,
               ),
             )
           else
@@ -52,9 +53,11 @@ class ProfileSelectedDayPanel extends StatelessWidget {
                   .map(
                     (habit) => Chip(
                       label: Text(habit.name),
-                      backgroundColor: AppColors.surfaceContainerLow,
+                      backgroundColor: colorScheme.surfaceContainerLow,
                       side: BorderSide(
-                        color: AppColors.outlineVariant.withValues(alpha: 0.3),
+                        color: colorScheme.outlineVariant.withValues(
+                          alpha: 0.3,
+                        ),
                       ),
                     ),
                   )

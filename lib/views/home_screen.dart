@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 import 'package:habit_forge/models/habit.dart';
 import 'package:habit_forge/widgets/habit/create_habit_bottom_sheet.dart';
 import 'package:habit_forge/widgets/habit/habits_list.dart';
@@ -71,11 +70,26 @@ class HomeScreen extends StatelessWidget {
   }
 
   Future<void> _confirmDeleteHabit(BuildContext context, Habit habit) async {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final deleteContainerColor = isDarkMode
+        ? colorScheme.errorContainer
+        : colorScheme.tertiaryContainer;
+    final deleteIconColor = isDarkMode
+        ? colorScheme.error
+        : colorScheme.tertiary;
+    final deleteButtonColor = isDarkMode
+        ? colorScheme.error
+        : colorScheme.tertiary;
+    final deleteButtonTextColor = isDarkMode
+        ? colorScheme.onError
+        : Colors.white;
+
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: AppColors.surfaceContainerLowest,
+          backgroundColor: colorScheme.surfaceContainerLowest,
           surfaceTintColor: Colors.transparent,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(24)),
@@ -90,13 +104,13 @@ class HomeScreen extends StatelessWidget {
               Container(
                 width: 42,
                 height: 42,
-                decoration: const BoxDecoration(
-                  color: AppColors.tertiaryContainer,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                decoration: BoxDecoration(
+                  color: deleteContainerColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.delete_outline,
-                  color: AppColors.tertiary,
+                  color: deleteIconColor,
                 ),
               ),
               const SizedBox(height: 12),
@@ -119,8 +133,8 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: FilledButton(
                     style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.tertiary,
-                      foregroundColor: Colors.white,
+                      backgroundColor: deleteButtonColor,
+                      foregroundColor: deleteButtonTextColor,
                     ),
                     onPressed: () => Navigator.of(context).pop(true),
                     child: const Text('Delete'),

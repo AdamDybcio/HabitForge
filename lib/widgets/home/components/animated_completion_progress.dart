@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 
 /// Animated completion summary with percentage text and progress bar.
 class AnimatedCompletionProgress extends StatelessWidget {
@@ -20,6 +19,7 @@ class AnimatedCompletionProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final safeCompleted = completed.clamp(0, total);
     final targetProgress = total == 0 ? 0.0 : safeCompleted / total;
 
@@ -38,7 +38,7 @@ class AnimatedCompletionProgress extends StatelessWidget {
                 Text(
                   '$animatedPercentage% Complete',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppColors.secondary,
+                    color: colorScheme.secondary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -46,7 +46,7 @@ class AnimatedCompletionProgress extends StatelessWidget {
                 Text(
                   '$safeCompleted/$total',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppColors.onSurface,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -57,9 +57,9 @@ class AnimatedCompletionProgress extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: animatedProgress,
                 minHeight: _trackHeight,
-                backgroundColor: AppColors.surfaceContainerHigh,
-                valueColor: const AlwaysStoppedAnimation<Color>(
-                  AppColors.primary,
+                backgroundColor: colorScheme.surfaceContainerHigh,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  colorScheme.primary,
                 ),
               ),
             ),

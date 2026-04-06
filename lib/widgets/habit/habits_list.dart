@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 import 'package:habit_forge/models/habit.dart';
 import 'package:habit_forge/widgets/habit/habit_list_item.dart';
 import 'package:habit_forge/widgets/home/home_empty_state.dart';
@@ -48,6 +47,8 @@ class _HabitsListState extends State<HabitsList> {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+
     if (widget.controller.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -96,8 +97,8 @@ class _HabitsListState extends State<HabitsList> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              AppColors.background.withValues(alpha: 0),
-                              AppColors.background,
+                              backgroundColor.withValues(alpha: 0),
+                              backgroundColor,
                             ],
                           ),
                         ),

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:habit_forge/core/helpers/habit_icon_catalog.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 
 /// Section title for icon picker.
 class IconPickerTitle extends StatelessWidget {
@@ -70,6 +69,8 @@ class _IconChoiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Tooltip(
       message: option.label,
       child: InkWell(
@@ -81,13 +82,15 @@ class _IconChoiceTile extends StatelessWidget {
           height: iconBoxSize,
           decoration: BoxDecoration(
             color: selected
-                ? AppColors.primary.withValues(alpha: 0.14)
-                : AppColors.surfaceContainerLow,
+                ? colorScheme.primary.withValues(alpha: 0.14)
+                : colorScheme.surfaceContainerLow,
             borderRadius: BorderRadius.all(Radius.circular(iconRadius)),
           ),
           child: Icon(
             option.icon,
-            color: selected ? AppColors.primary : AppColors.onSurfaceVariant,
+            color: selected
+                ? colorScheme.primary
+                : colorScheme.onSurfaceVariant,
           ),
         ),
       ),

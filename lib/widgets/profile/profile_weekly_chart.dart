@@ -17,15 +17,16 @@ class ProfileWeeklyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final now = DateTime.now();
     final maxY = (completions.isEmpty ? 0 : completions.reduce(_max))
         .toDouble();
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
-        borderRadius: BorderRadius.all(Radius.circular(24)),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLowest,
+        borderRadius: const BorderRadius.all(Radius.circular(24)),
         boxShadow: AppEffects.ambientShadow,
       ),
       child: Column(
@@ -49,7 +50,7 @@ class ProfileWeeklyChart extends StatelessWidget {
                       horizontal: 10,
                       vertical: 8,
                     ),
-                    getTooltipColor: (_) => AppColors.onSurface,
+                    getTooltipColor: (_) => colorScheme.onSurface,
                     getTooltipItem: (group, _, rod, __) {
                       final day = now.subtract(
                         Duration(days: completions.length - 1 - group.x),
@@ -79,7 +80,7 @@ class ProfileWeeklyChart extends StatelessWidget {
                   drawVerticalLine: false,
                   horizontalInterval: 1,
                   getDrawingHorizontalLine: (_) => FlLine(
-                    color: AppColors.outlineVariant.withValues(alpha: 0.22),
+                    color: colorScheme.outlineVariant.withValues(alpha: 0.22),
                     strokeWidth: 1,
                   ),
                 ),
@@ -101,7 +102,7 @@ class ProfileWeeklyChart extends StatelessWidget {
                           value.toInt().toString(),
                           style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
-                                color: AppColors.onSurfaceVariant,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                         );
                       },
@@ -127,7 +128,9 @@ class ProfileWeeklyChart extends StatelessWidget {
                           child: Text(
                             DateFormat('E').format(day),
                             style: Theme.of(context).textTheme.labelSmall
-                                ?.copyWith(color: AppColors.onSurfaceVariant),
+                                ?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
                           ),
                         );
                       },
@@ -185,6 +188,8 @@ class _LegendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -193,7 +198,7 @@ class _LegendItem extends StatelessWidget {
           height: ProfileWeeklyChart._legendDotSize,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(4)),
-            color: useGradient ? null : AppColors.outlineVariant,
+            color: useGradient ? null : colorScheme.outlineVariant,
             gradient: useGradient ? AppEffects.ctaGradient : null,
           ),
         ),
@@ -201,7 +206,7 @@ class _LegendItem extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: AppColors.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
       ],

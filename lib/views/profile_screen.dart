@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
 import 'package:habit_forge/core/extensions/date_extensions.dart';
-import 'package:habit_forge/core/theme/colors.dart';
 import 'package:habit_forge/models/habit.dart';
 import 'package:habit_forge/widgets/profile/profile_monthly_calendar.dart';
 import 'package:habit_forge/widgets/profile/profile_selected_day_panel.dart';
@@ -35,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final controller = context.watch<HomeController>();
     final habits = controller.habits;
     final completionCountByDay = _buildCompletionCountByDay(habits);
@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               'Track consistency, review your history, '
               'and plan your next streak.',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.onSurfaceVariant,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 18),

@@ -1,5 +1,4 @@
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// Bootstraps Hive for local persistence.
 class HiveService {
@@ -11,8 +10,7 @@ class HiveService {
       return;
     }
 
-    final appDir = await getApplicationDocumentsDirectory();
-    Hive.init(appDir.path);
+    await Hive.initFlutter();
     _isInitialized = true;
   }
 }

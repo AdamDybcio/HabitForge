@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:habit_forge/core/extensions/date_extensions.dart';
 import 'package:habit_forge/models/habit.dart';
@@ -8,6 +10,8 @@ import 'package:uuid/uuid.dart';
 class HomeController extends ChangeNotifier {
   final HabitLocalStorageService _storage;
   final Uuid _uuid;
+  final bool _enableDayRolloverTicker;
+  Timer? _dayRolloverTimer;
 
   final List<Habit> _habits = <Habit>[];
   bool _isLoading = false;
@@ -26,8 +30,16 @@ class HomeController extends ChangeNotifier {
   HomeController({
     required HabitLocalStorageService storage,
     Uuid? uuid,
+    bool enableDayRolloverTicker = true,
   }) : _storage = storage,
-       _uuid = uuid ?? const Uuid();
+       _uuid = uuid ?? const Uuid(),
+       _enableDayRolloverTicker = enableDayRolloverTicker {
+    if (!_enableDayRolloverTicker) {
+      return;
+    }
+
+    _scheduleDayRolloverTick();
+  }
 
   /// Loads habits from local storage.
   Future<void> initialize() async {
@@ -142,8 +154,33 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _scheduleDayRolloverTick() {
+    _dayRolloverTimer?.cancel();
+
+    final now = DateTime.now();
+    final nextMidnight = DateTime(now.year, now.month, now.day + 1);
+    final delay = nextMidnight.difference(now) + const Duration(seconds: 1);
+
+    _dayRolloverTimer = Timer(delay, () {
+      if (!hasListeners) {
+        _scheduleDayRolloverTick();
+
+        return;
+      }
+
+      notifyListeners();
+      _scheduleDayRolloverTick();
+    });
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _dayRolloverTimer?.cancel();
+    super.dispose();
   }
 }

@@ -14,7 +14,10 @@ void main() {
         completedDays: <DateTime>[],
       );
       final storage = InMemoryHabitStorageService(initialHabits: [existing]);
-      final controller = HomeController(storage: storage);
+      final controller = HomeController(
+        storage: storage,
+        enableDayRolloverTicker: false,
+      );
 
       await controller.initialize();
 
@@ -25,7 +28,10 @@ void main() {
 
     test('initialize sets error message when load fails', () async {
       final storage = InMemoryHabitStorageService(failOnLoad: true);
-      final controller = HomeController(storage: storage);
+      final controller = HomeController(
+        storage: storage,
+        enableDayRolloverTicker: false,
+      );
 
       await controller.initialize();
 
@@ -39,6 +45,7 @@ void main() {
       final controller = HomeController(
         storage: storage,
         uuid: FixedUuid(['habit-id-1']),
+        enableDayRolloverTicker: false,
       );
 
       await controller.addHabit(
@@ -58,7 +65,10 @@ void main() {
 
     test('addHabit ignores empty names', () async {
       final storage = InMemoryHabitStorageService();
-      final controller = HomeController(storage: storage);
+      final controller = HomeController(
+        storage: storage,
+        enableDayRolloverTicker: false,
+      );
 
       await controller.addHabit(name: '   ');
 
@@ -74,7 +84,10 @@ void main() {
         completedDays: <DateTime>[],
       );
       final storage = InMemoryHabitStorageService(initialHabits: [existing]);
-      final controller = HomeController(storage: storage);
+      final controller = HomeController(
+        storage: storage,
+        enableDayRolloverTicker: false,
+      );
       await controller.initialize();
 
       await controller.updateHabit(
@@ -99,7 +112,10 @@ void main() {
         completedDays: <DateTime>[],
       );
       final storage = InMemoryHabitStorageService(initialHabits: [existing]);
-      final controller = HomeController(storage: storage);
+      final controller = HomeController(
+        storage: storage,
+        enableDayRolloverTicker: false,
+      );
       await controller.initialize();
 
       await controller.toggleHabitCompletion('habit-1', day: day);
@@ -123,7 +139,10 @@ void main() {
       final storage = InMemoryHabitStorageService(
         initialHabits: [first, second],
       );
-      final controller = HomeController(storage: storage);
+      final controller = HomeController(
+        storage: storage,
+        enableDayRolloverTicker: false,
+      );
       await controller.initialize();
 
       await controller.removeHabit('h1');
@@ -137,6 +156,7 @@ void main() {
       final controller = HomeController(
         storage: storage,
         uuid: FixedUuid(['habit-id-1']),
+        enableDayRolloverTicker: false,
       );
 
       await controller.addHabit(name: 'Drink water');

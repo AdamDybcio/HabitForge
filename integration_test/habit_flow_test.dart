@@ -16,6 +16,7 @@ void main() {
     final controller = HomeController(
       storage: InMemoryHabitStorageService(),
       uuid: FixedUuid(['habit-1']),
+      enableDayRolloverTicker: false,
     );
 
     await tester.pumpWidget(

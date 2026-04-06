@@ -101,5 +101,37 @@ void main() {
 
       expect(habit.isCompletedToday(), false);
     });
+
+    test('description and iconName have sensible defaults', () {
+      const habit = Habit(
+        id: '1',
+        name: 'Test Habit',
+        completedDays: [],
+      );
+
+      expect(habit.description, '');
+      expect(habit.iconName, 'task_alt');
+    });
+
+    test('toJson and fromJson keep all fields', () {
+      final today = DateTime.now();
+      final habit = Habit(
+        id: '1',
+        name: 'Hydration',
+        description: 'Drink 2L of water',
+        iconName: 'water_drop',
+        completedDays: [today],
+      );
+
+      final encoded = habit.toJson();
+      final decoded = Habit.fromJson(encoded);
+
+      expect(decoded.id, habit.id);
+      expect(decoded.name, habit.name);
+      expect(decoded.description, habit.description);
+      expect(decoded.iconName, habit.iconName);
+      expect(decoded.completedDays.length, habit.completedDays.length);
+      expect(decoded.completedDays.first.isAtSameMomentAs(today), true);
+    });
   });
 }

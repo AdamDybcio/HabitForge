@@ -2,7 +2,9 @@
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
 import 'package:habit_forge/core/theme/colors.dart';
+import 'package:habit_forge/widgets/profile/components/profile_legend_item.dart';
 import 'package:intl/intl.dart';
 
 /// Weekly completion chart based on aggregated daily completions.
@@ -18,6 +20,8 @@ class ProfileWeeklyChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = appL10n(context);
+    final localeTag = Localizations.localeOf(context).toLanguageTag();
     final now = DateTime.now();
     final maxY = (completions.isEmpty ? 0 : completions.reduce(_max))
         .toDouble();
@@ -32,7 +36,10 @@ class ProfileWeeklyChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Last 7 days', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            l10n.lastSevenDays,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 12),
           SizedBox(
             height: _chartHeight,
@@ -50,27 +57,29 @@ class ProfileWeeklyChart extends StatelessWidget {
                       horizontal: 10,
                       vertical: 8,
                     ),
-                    getTooltipColor: (_) => colorScheme.onSurface,
+                    getTooltipColor: (_) => colorScheme.inverseSurface,
                     getTooltipItem: (group, _, rod, __) {
                       final day = now.subtract(
                         Duration(days: completions.length - 1 - group.x),
                       );
                       final tooltipTextStyle =
                           Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: Colors.white,
+                            color: colorScheme.onInverseSurface,
                             fontWeight: FontWeight.w700,
                             height: 1.25,
                           ) ??
-                          const TextStyle(
-                            color: Colors.white,
+                          TextStyle(
+                            color: colorScheme.onInverseSurface,
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                             height: 1.25,
                           );
 
                       return BarTooltipItem(
-                        '${DateFormat('EEE').format(day)}\n'
-                        '${rod.toY.toInt()} completed',
+                        l10n.weeklyTooltip(
+                          DateFormat('EEE', localeTag).format(day),
+                          rod.toY.toInt(),
+                        ),
                         tooltipTextStyle,
                       );
                     },
@@ -126,7 +135,7 @@ class ProfileWeeklyChart extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.only(top: 6),
                           child: Text(
-                            DateFormat('E').format(day),
+                            DateFormat('E', localeTag).format(day),
                             style: Theme.of(context).textTheme.labelSmall
                                 ?.copyWith(
                                   color: colorScheme.onSurfaceVariant,
@@ -156,16 +165,18 @@ class ProfileWeeklyChart extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const Wrap(
+          Wrap(
             spacing: 12,
             runSpacing: 8,
             children: [
-              _LegendItem(
-                label: 'Completed habits per day',
+              ProfileLegendItem(
+                label: l10n.legendCompletedHabitsPerDay,
+                dotSize: _legendDotSize,
                 useGradient: true,
               ),
-              _LegendItem(
-                label: 'Mon-Sun timeline (last 7 days)',
+              ProfileLegendItem(
+                label: l10n.legendTimelineLastSevenDays,
+                dotSize: _legendDotSize,
               ),
             ],
           ),
@@ -175,41 +186,4 @@ class ProfileWeeklyChart extends StatelessWidget {
   }
 
   int _max(int a, int b) => a > b ? a : b;
-}
-
-class _LegendItem extends StatelessWidget {
-  final String label;
-  final bool useGradient;
-
-  const _LegendItem({
-    required this.label,
-    this.useGradient = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: ProfileWeeklyChart._legendDotSize,
-          height: ProfileWeeklyChart._legendDotSize,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(4)),
-            color: useGradient ? null : colorScheme.outlineVariant,
-            gradient: useGradient ? AppEffects.ctaGradient : null,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ],
-    );
-  }
 }

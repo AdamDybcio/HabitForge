@@ -1,39 +1,11 @@
 // ignore_for_file: prefer_match_file_name
 import 'package:flutter/material.dart';
 
-/// Definition of a selectable habit icon option.
-class HabitIconOption {
-  /// Stable icon key saved in persistence.
-  final String key;
+import 'package:habit_forge/core/helpers/models/habit_icon_option.dart';
+import 'package:habit_forge/core/helpers/models/habit_icon_palette.dart';
 
-  /// Human-readable label used in tooltips.
-  final String label;
-
-  /// Material icon used in UI.
-  final IconData icon;
-
-  /// Creates [HabitIconOption].
-  const HabitIconOption({
-    required this.key,
-    required this.label,
-    required this.icon,
-  });
-}
-
-/// Visual palette assigned to a habit icon key.
-class HabitIconPalette {
-  /// Background color for icon badge.
-  final Color background;
-
-  /// Foreground icon color.
-  final Color foreground;
-
-  /// Creates [HabitIconPalette].
-  const HabitIconPalette({
-    required this.background,
-    required this.foreground,
-  });
-}
+export 'models/habit_icon_option.dart';
+export 'models/habit_icon_palette.dart';
 
 /// Catalog of all habit icons supported by the app.
 const habitIconCatalog = <HabitIconOption>[

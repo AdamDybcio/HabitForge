@@ -1,0 +1,102 @@
+{
+  "@@locale": "en",
+  "appHomeTab": "Home",
+  "appProfileTab": "Profile",
+  "changeThemeTooltip": "Change theme",
+  "changeLanguageTooltip": "Change language",
+  "languageEnglish": "English",
+  "languagePolish": "Polish",
+  "dailyMomentumTitle": "Daily Momentum",
+  "noHabitsYetTitle": "No habits yet",
+  "noHabitsYetDescription": "Start with one tiny routine and build your daily momentum.",
+  "createFirstHabit": "Create first habit",
+  "completionPercentLabel": "{percent}% Complete",
+  "@completionPercentLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "createHabitTitle": "Create Habit",
+  "editHabitTitle": "Edit Habit",
+  "habitNameRequiredError": "Name is required",
+  "creatingHabit": "Creating...",
+  "savingHabit": "Saving...",
+  "saveChanges": "Save changes",
+  "createHabit": "Create habit",
+  "habitNameLabel": "Name",
+  "habitNameHint": "e.g. Drink water",
+  "habitDescriptionLabel": "Description",
+  "habitDescriptionHint": "Optional notes for this habit",
+  "habitIconLabel": "Icon",
+  "habitActionsTooltip": "Habit actions",
+  "editAction": "Edit",
+  "deleteAction": "Delete",
+  "completedToday": "Completed today",
+  "tapToComplete": "Tap to complete",
+  "deleteHabitTitle": "Delete habit?",
+  "deleteHabitMessage": "This will permanently remove \"{habitName}\" from your list.",
+  "@deleteHabitMessage": {
+    "placeholders": {
+      "habitName": {
+        "type": "String"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "profileTitle": "Profile",
+  "profileSubtitle": "Track consistency, review your history, and plan your next streak.",
+  "statsToday": "Today",
+  "statsHabitsDone": "Habits done",
+  "statsCompletion": "Completion",
+  "statsDailySuccess": "Daily success",
+  "statsAllTime": "All Time",
+  "statsCompletions": "Completions",
+  "statsBestStreak": "Best Streak",
+  "statsCurrentStreakMax": "Current streak max",
+  "lastSevenDays": "Last 7 days",
+  "weeklyTooltip": "{day}\n{count} completed",
+  "@weeklyTooltip": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "legendCompletedHabitsPerDay": "Completed habits per day",
+  "legendTimelineLastSevenDays": "Mon-Sun timeline (last 7 days)",
+  "completedOnDay": "Completed on {dayLabel}",
+  "@completedOnDay": {
+    "placeholders": {
+      "dayLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "noCompletedHabitsOnDay": "No completed habits on this day.",
+  "iconLabelGeneral": "General",
+  "iconLabelHydration": "Hydration",
+  "iconLabelMindfulness": "Mindfulness",
+  "iconLabelWorkout": "Workout",
+  "iconLabelReading": "Reading",
+  "iconLabelSleep": "Sleep",
+  "iconLabelNutrition": "Nutrition",
+  "iconLabelRunning": "Running",
+  "iconLabelMusic": "Music",
+  "iconLabelLearning": "Learning",
+  "iconLabelFinance": "Finance",
+  "iconLabelWellness": "Wellness",
+  "iconLabelHealth": "Health",
+  "iconLabelHygiene": "Hygiene",
+  "iconLabelCoding": "Coding",
+  "iconLabelLanguage": "Language",
+  "iconLabelPetCare": "Pet Care",
+  "iconLabelNature": "Nature",
+  "iconLabelStyle": "Style",
+  "iconLabelTravel": "Travel",
+  "iconLabelNoSmoking": "No Smoking"
+}

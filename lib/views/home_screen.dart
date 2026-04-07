@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
 import 'package:habit_forge/models/habit.dart';
 import 'package:habit_forge/widgets/habit/create_habit_bottom_sheet.dart';
 import 'package:habit_forge/widgets/habit/habits_list.dart';
@@ -70,6 +71,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Future<void> _confirmDeleteHabit(BuildContext context, Habit habit) async {
+    final l10n = appL10n(context);
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final deleteContainerColor = isDarkMode
@@ -97,7 +99,7 @@ class HomeScreen extends StatelessWidget {
           titlePadding: const EdgeInsets.fromLTRB(24, 22, 24, 8),
           contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
           actionsPadding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-          title: const Text('Delete habit?'),
+          title: Text(l10n.deleteHabitTitle),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -115,7 +117,7 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'This will permanently remove "${habit.name}" from your list.',
+                l10n.deleteHabitMessage(habit.name),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -126,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text('Cancel'),
+                    child: Text(l10n.cancel),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -137,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                       foregroundColor: deleteButtonTextColor,
                     ),
                     onPressed: () => Navigator.of(context).pop(true),
-                    child: const Text('Delete'),
+                    child: Text(l10n.deleteAction),
                   ),
                 ),
               ],

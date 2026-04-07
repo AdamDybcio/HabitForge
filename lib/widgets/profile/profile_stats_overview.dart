@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
+import 'package:habit_forge/widgets/profile/components/profile_stat_card.dart';
 
 /// Compact metrics section for profile statistics.
 class ProfileStatsOverview extends StatelessWidget {
@@ -21,6 +23,7 @@ class ProfileStatsOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = appL10n(context);
     final completionRate = totalHabits == 0
         ? 0
         : ((completedToday / totalHabits) * 100).round();
@@ -29,88 +32,31 @@ class ProfileStatsOverview extends StatelessWidget {
       spacing: 12,
       runSpacing: 12,
       children: [
-        _StatCard(
-          title: 'Today',
+        ProfileStatCard(
+          title: l10n.statsToday,
           value: '$completedToday/$totalHabits',
-          subtitle: 'Habits done',
+          subtitle: l10n.statsHabitsDone,
           color: colorScheme.primary,
         ),
-        _StatCard(
-          title: 'Completion',
+        ProfileStatCard(
+          title: l10n.statsCompletion,
           value: '$completionRate%',
-          subtitle: 'Daily success',
+          subtitle: l10n.statsDailySuccess,
           color: colorScheme.secondary,
         ),
-        _StatCard(
-          title: 'All Time',
+        ProfileStatCard(
+          title: l10n.statsAllTime,
           value: '$totalCompletions',
-          subtitle: 'Completions',
+          subtitle: l10n.statsCompletions,
           color: colorScheme.primaryContainer,
         ),
-        _StatCard(
-          title: 'Best Streak',
+        ProfileStatCard(
+          title: l10n.statsBestStreak,
           value: '$bestCurrentStreak',
-          subtitle: 'Current streak max',
+          subtitle: l10n.statsCurrentStreakMax,
           color: colorScheme.tertiary,
         ),
       ],
-    );
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  static const _cardWidth = 160.0;
-
-  final String title;
-  final String value;
-  final String subtitle;
-  final Color color;
-
-  const _StatCard({
-    required this.title,
-    required this.value,
-    required this.subtitle,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Container(
-      width: _cardWidth,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLowest,
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        border: Border.all(color: color.withValues(alpha: 0.2)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: color,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            subtitle,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

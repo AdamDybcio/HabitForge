@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
 import 'package:habit_forge/controllers/navigation_controller.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
+import 'package:habit_forge/views/components/main_navigation_item.dart';
 import 'package:habit_forge/views/home_screen.dart';
 import 'package:habit_forge/views/profile_screen.dart';
 import 'package:habit_forge/widgets/habit/create_habit_bottom_sheet.dart';
@@ -19,6 +21,7 @@ class MainNavigationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigationController = context.watch<NavigationController>();
     final currentIndex = navigationController.currentIndex;
+    final l10n = appL10n(context);
 
     return Scaffold(
       body: IndexedStack(
@@ -45,18 +48,18 @@ class MainNavigationScreen extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: _NavItem(
+              child: MainNavigationItem(
                 icon: Icons.home_rounded,
-                label: 'Home',
+                label: l10n.appHomeTab,
                 isSelected: currentIndex == 0,
                 onTap: () => navigationController.selectTab(0),
               ),
             ),
             const SizedBox(width: _fabGapWidth),
             Expanded(
-              child: _NavItem(
+              child: MainNavigationItem(
                 icon: Icons.person_rounded,
-                label: 'Profile',
+                label: l10n.appProfileTab,
                 isSelected: currentIndex == 1,
                 onTap: () => navigationController.selectTab(1),
               ),
@@ -77,77 +80,6 @@ class MainNavigationScreen extends StatelessWidget {
       builder: (_) {
         return CreateHabitBottomSheet(controller: controller);
       },
-    );
-  }
-}
-
-class _NavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _NavItem({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final color = isSelected
-        ? colorScheme.primary
-        : colorScheme.onSurfaceVariant;
-    final fontWeight = isSelected ? FontWeight.w700 : FontWeight.w600;
-    final baseLabelStyle =
-        Theme.of(context).textTheme.labelSmall ??
-        const TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
-
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(14)),
-        onTap: onTap,
-        child: AnimatedScale(
-          duration: const Duration(milliseconds: 220),
-          curve: Curves.easeOutBack,
-          scale: isSelected ? 1 : 0.96,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: isSelected
-                  ? colorScheme.surfaceContainerLowest
-                  : Colors.transparent,
-              borderRadius: const BorderRadius.all(Radius.circular(14)),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AnimatedScale(
-                  duration: const Duration(milliseconds: 220),
-                  curve: Curves.easeOutBack,
-                  scale: isSelected ? 1.08 : 1,
-                  child: Icon(icon, color: color),
-                ),
-                const SizedBox(height: 2),
-                AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 220),
-                  curve: Curves.easeOutCubic,
-                  style: baseLabelStyle.copyWith(
-                    color: color,
-                    fontWeight: fontWeight,
-                  ),
-                  child: Text(label),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
 import 'package:habit_forge/core/theme/colors.dart';
 import 'package:habit_forge/models/habit.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +21,9 @@ class ProfileSelectedDayPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final dayLabel = DateFormat('EEE, MMM d').format(selectedDay);
+    final l10n = appL10n(context);
+    final localeTag = Localizations.localeOf(context).toLanguageTag();
+    final dayLabel = DateFormat('EEE, MMM d', localeTag).format(selectedDay);
 
     return Container(
       width: double.infinity,
@@ -34,13 +37,13 @@ class ProfileSelectedDayPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Completed on $dayLabel',
+            l10n.completedOnDay(dayLabel),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 10),
           if (completedHabits.isEmpty)
             Text(
-              'No completed habits on this day.',
+              l10n.noCompletedHabitsOnDay,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),

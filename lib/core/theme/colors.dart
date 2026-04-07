@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_match_file_name
 import 'package:flutter/material.dart';
 
+export 'app_effects.dart';
+
 /// Application color tokens based on the Editorial Precision design system.
 class AppColors {
   /// Brand action color used for primary interactions.
@@ -50,26 +52,4 @@ class AppColors {
 
   /// 15% opacity ghost border fallback.
   static const ghostBorder = Color(0x26C2C6D6);
-}
-
-/// Reusable visual effects for premium interactions.
-class AppEffects {
-  /// Primary call-to-action gradient.
-  static const ctaGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [
-      AppColors.primary,
-      AppColors.primaryContainer,
-    ],
-  );
-
-  /// Ultra-diffused ambient shadow for floating elements.
-  static const ambientShadow = [
-    BoxShadow(
-      color: Color.fromRGBO(25, 28, 29, 0.05),
-      blurRadius: 32,
-      offset: Offset(0, 8),
-    ),
-  ];
 }

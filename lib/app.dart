@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
+import 'package:habit_forge/controllers/locale_controller.dart';
 import 'package:habit_forge/controllers/navigation_controller.dart';
 import 'package:habit_forge/controllers/theme_controller.dart';
 import 'package:habit_forge/core/theme/app_theme.dart';
+import 'package:habit_forge/l10n/app_localizations.dart';
 import 'package:habit_forge/services/habit_local_storage_service.dart';
 import 'package:habit_forge/views/main_navigation_screen.dart';
 import 'package:provider/provider.dart';
@@ -30,24 +32,26 @@ class HabitForgeApp extends StatelessWidget {
         ChangeNotifierProvider<ThemeController>(
           create: (_) => ThemeController()..initialize(),
         ),
+        ChangeNotifierProvider<LocaleController>(
+          create: (_) => LocaleController()..initialize(),
+        ),
       ],
-      child: Consumer<ThemeController>(
-        builder: (_, themeController, _) {
+      child: Consumer2<ThemeController, LocaleController>(
+        builder: (_, themeController, localeController, _) {
           return MaterialApp(
             title: 'HabitForge',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeController.themeMode,
+            locale: localeController.locale,
             localizationsDelegates: const [
+              AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('pl'),
-            ],
+            supportedLocales: AppLocalizations.supportedLocales,
             home: const MainNavigationScreen(),
           );
         },

@@ -98,5 +98,11 @@
   "iconLabelNature": "Nature",
   "iconLabelStyle": "Style",
   "iconLabelTravel": "Travel",
-  "iconLabelNoSmoking": "No Smoking"
+  "iconLabelNoSmoking": "No Smoking",
+  "onboardingTitle": "Build momentum, one habit at a time",
+  "onboardingSubtitle": "HabitForge helps you stay consistent every day and grow streaks that matter.",
+  "onboardingPointConsistency": "Track daily habits with one tap",
+  "onboardingPointProgress": "See your progress on clear charts",
+  "onboardingPointFocus": "Keep your routine simple and focused",
+  "onboardingGetStarted": "Get started"
 }

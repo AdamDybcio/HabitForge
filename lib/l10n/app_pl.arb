@@ -98,5 +98,11 @@
   "iconLabelNature": "Natura",
   "iconLabelStyle": "Styl",
   "iconLabelTravel": "Podróże",
-  "iconLabelNoSmoking": "Bez palenia"
+  "iconLabelNoSmoking": "Bez palenia",
+  "onboardingTitle": "Buduj regularność, jeden nawyk na raz",
+  "onboardingSubtitle": "HabitForge pomaga Ci codziennie trzymać rytm i rozwijać serie, które mają znaczenie.",
+  "onboardingPointConsistency": "Śledź codzienne nawyki jednym dotknięciem",
+  "onboardingPointProgress": "Sprawdzaj postępy na czytelnych wykresach",
+  "onboardingPointFocus": "Utrzymuj prostą i skupioną rutynę",
+  "onboardingGetStarted": "Zaczynaj"
 }

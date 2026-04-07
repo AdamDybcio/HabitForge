@@ -7,6 +7,7 @@ import 'package:habit_forge/controllers/locale_controller.dart';
 import 'package:habit_forge/controllers/navigation_controller.dart';
 import 'package:habit_forge/controllers/theme_controller.dart';
 import 'package:habit_forge/core/theme/app_theme.dart';
+import 'package:habit_forge/core/widgets/responsive_app_frame.dart';
 import 'package:habit_forge/l10n/app_localizations.dart';
 import 'package:habit_forge/services/habit_local_storage_service.dart';
 import 'package:habit_forge/views/main_navigation_screen.dart';
@@ -52,6 +53,13 @@ class HabitForgeApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: AppLocalizations.supportedLocales,
+            builder: (_, child) {
+              if (child == null) {
+                return const SizedBox.shrink();
+              }
+
+              return ResponsiveAppFrame(child: child);
+            },
             home: const MainNavigationScreen(),
           );
         },

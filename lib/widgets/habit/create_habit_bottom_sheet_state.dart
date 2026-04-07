@@ -16,6 +16,8 @@ class CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
   final _descriptionController = TextEditingController();
 
   String _selectedIconName = 'task_alt';
+  bool _reminderEnabled = false;
+  TimeOfDay _reminderTime = const TimeOfDay(hour: 20, minute: 0);
   bool _isSubmitting = false;
 
   bool get _isEditMode => widget.initialHabit != null;
@@ -30,6 +32,17 @@ class CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
       _nameController.text = initialHabit.name;
       _descriptionController.text = initialHabit.description;
       _selectedIconName = initialHabit.iconName;
+      _reminderEnabled = initialHabit.reminderEnabled;
+
+      final initialReminderHour = initialHabit.reminderHour;
+      final initialReminderMinute = initialHabit.reminderMinute;
+
+      if (initialReminderHour != null && initialReminderMinute != null) {
+        _reminderTime = TimeOfDay(
+          hour: initialReminderHour,
+          minute: initialReminderMinute,
+        );
+      }
     }
   }
 
@@ -64,6 +77,13 @@ class CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 const SizedBox(height: 12),
                 HabitDescriptionField(controller: _descriptionController),
                 const SizedBox(height: 14),
+                HabitReminderControls(
+                  reminderEnabled: _reminderEnabled,
+                  reminderTime: _reminderTime,
+                  onToggle: _toggleReminder,
+                  onSelectTime: _selectReminderTime,
+                ),
+                const SizedBox(height: 10),
                 IconPickerTitle(label: l10n.habitIconLabel),
                 const SizedBox(height: 8),
                 HabitIconPicker(
@@ -143,6 +163,9 @@ class CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
         name: _nameController.text,
         description: _descriptionController.text,
         iconName: _selectedIconName,
+        reminderEnabled: _reminderEnabled,
+        reminderHour: _reminderEnabled ? _reminderTime.hour : null,
+        reminderMinute: _reminderEnabled ? _reminderTime.minute : null,
       );
     } else {
       await widget.controller.updateHabit(
@@ -150,6 +173,9 @@ class CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
         name: _nameController.text,
         description: _descriptionController.text,
         iconName: _selectedIconName,
+        reminderEnabled: _reminderEnabled,
+        reminderHour: _reminderEnabled ? _reminderTime.hour : null,
+        reminderMinute: _reminderEnabled ? _reminderTime.minute : null,
       );
     }
 
@@ -158,5 +184,36 @@ class CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
     }
 
     Navigator.of(context).pop();
+  }
+
+  void _toggleReminder(bool enabled) {
+    setState(() {
+      _reminderEnabled = enabled;
+    });
+  }
+
+  Future<void> _selectReminderTime() async {
+    final selected = await showTimePicker(
+      context: context,
+      initialTime: _reminderTime,
+      builder: (context, child) {
+        if (child == null) {
+          return const SizedBox.shrink();
+        }
+
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child,
+        );
+      },
+    );
+
+    if (selected == null) {
+      return;
+    }
+
+    setState(() {
+      _reminderTime = selected;
+    });
   }
 }

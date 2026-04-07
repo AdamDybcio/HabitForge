@@ -29,6 +29,16 @@
   "habitNameHint": "e.g. Drink water",
   "habitDescriptionLabel": "Description",
   "habitDescriptionHint": "Optional notes for this habit",
+  "habitReminderLabel": "Daily reminder",
+  "habitReminderDescription": "Get a local notification every day.",
+  "habitReminderTime": "Reminder time: {time}",
+  "@habitReminderTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "habitIconLabel": "Icon",
   "habitActionsTooltip": "Habit actions",
   "editAction": "Edit",

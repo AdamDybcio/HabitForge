@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_match_file_name
 import 'package:habit_forge/models/habit.dart';
 import 'package:habit_forge/services/habit_local_storage_service.dart';
+import 'package:habit_forge/services/local_notifications_service.dart';
 import 'package:uuid/data.dart';
 import 'package:uuid/uuid.dart';
 
@@ -51,5 +52,40 @@ class FixedUuid extends Uuid {
     _index++;
 
     return value;
+  }
+}
+
+class InMemoryReminderScheduler implements HabitReminderScheduler {
+  final Set<String> scheduledHabitIds = <String>{};
+  bool initializeCalled = false;
+  bool syncCalled = false;
+
+  @override
+  Future<void> initialize() async {
+    initializeCalled = true;
+  }
+
+  @override
+  Future<void> syncHabitReminders(List<Habit> habits) async {
+    syncCalled = true;
+    scheduledHabitIds
+      ..clear()
+      ..addAll(
+        habits.where((habit) => habit.hasReminder).map((habit) => habit.id),
+      );
+  }
+
+  @override
+  Future<void> scheduleHabitReminder(Habit habit) async {
+    if (habit.hasReminder) {
+      scheduledHabitIds.add(habit.id);
+    } else {
+      scheduledHabitIds.remove(habit.id);
+    }
+  }
+
+  @override
+  Future<void> cancelHabitReminder(String habitId) async {
+    scheduledHabitIds.remove(habitId);
   }
 }

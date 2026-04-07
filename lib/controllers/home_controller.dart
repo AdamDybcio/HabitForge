@@ -4,11 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:habit_forge/core/extensions/date_extensions.dart';
 import 'package:habit_forge/models/habit.dart';
 import 'package:habit_forge/services/habit_local_storage_service.dart';
+import 'package:habit_forge/services/local_notifications_service.dart';
 import 'package:uuid/uuid.dart';
 
 /// Home controller for habits state and business operations.
 class HomeController extends ChangeNotifier {
   final HabitLocalStorageService _storage;
+  final HabitReminderScheduler _reminderScheduler;
   final Uuid _uuid;
   final bool _enableDayRolloverTicker;
   Timer? _dayRolloverTimer;
@@ -29,9 +31,11 @@ class HomeController extends ChangeNotifier {
   /// Creates a controller for home screen logic and habits state.
   HomeController({
     required HabitLocalStorageService storage,
+    HabitReminderScheduler? reminderScheduler,
     Uuid? uuid,
     bool enableDayRolloverTicker = true,
   }) : _storage = storage,
+       _reminderScheduler = reminderScheduler ?? NoopHabitReminderScheduler(),
        _uuid = uuid ?? const Uuid(),
        _enableDayRolloverTicker = enableDayRolloverTicker {
     if (!_enableDayRolloverTicker) {
@@ -51,6 +55,7 @@ class HomeController extends ChangeNotifier {
       _habits
         ..clear()
         ..addAll(loadedHabits);
+      await _reminderScheduler.syncHabitReminders(_habits);
     } catch (_) {
       _errorMessage = 'Nie udało się wczytać nawyków.';
     } finally {
@@ -63,6 +68,9 @@ class HomeController extends ChangeNotifier {
     required String name,
     String description = '',
     String iconName = 'task_alt',
+    bool reminderEnabled = false,
+    int? reminderHour,
+    int? reminderMinute,
   }) async {
     final trimmedName = name.trim();
 
@@ -76,11 +84,18 @@ class HomeController extends ChangeNotifier {
       description: description.trim(),
       iconName: iconName,
       completedDays: const <DateTime>[],
+      reminderEnabled: reminderEnabled,
+      reminderHour: reminderEnabled ? reminderHour : null,
+      reminderMinute: reminderEnabled ? reminderMinute : null,
     );
 
     _habits.add(habit);
     notifyListeners();
-    await _persist();
+    final persisted = await _persist();
+
+    if (persisted) {
+      await _reminderScheduler.scheduleHabitReminder(habit);
+    }
   }
 
   /// Updates an existing habit and persists it.
@@ -89,6 +104,9 @@ class HomeController extends ChangeNotifier {
     required String name,
     String description = '',
     String iconName = 'task_alt',
+    bool reminderEnabled = false,
+    int? reminderHour,
+    int? reminderMinute,
   }) async {
     final trimmedName = name.trim();
 
@@ -103,13 +121,28 @@ class HomeController extends ChangeNotifier {
     }
 
     final existing = _habits[index];
-    _habits[index] = existing.copyWith(
+    final updated = existing.copyWith(
       name: trimmedName,
       description: description.trim(),
       iconName: iconName,
+      reminderEnabled: reminderEnabled,
+      reminderHour: reminderEnabled ? reminderHour : null,
+      reminderMinute: reminderEnabled ? reminderMinute : null,
+      clearReminderTime: !reminderEnabled,
     );
+    _habits[index] = updated;
     notifyListeners();
-    await _persist();
+    final persisted = await _persist();
+
+    if (!persisted) {
+      return;
+    }
+
+    if (updated.hasReminder) {
+      await _reminderScheduler.scheduleHabitReminder(updated);
+    } else {
+      await _reminderScheduler.cancelHabitReminder(updated.id);
+    }
   }
 
   /// Toggles completion for the selected day.
@@ -131,27 +164,44 @@ class HomeController extends ChangeNotifier {
       updatedDays.add(targetDay);
     }
 
-    _habits[index] = habit.copyWith(completedDays: updatedDays);
+    final updatedHabit = habit.copyWith(completedDays: updatedDays);
+    _habits[index] = updatedHabit;
     notifyListeners();
-    await _persist();
+    final persisted = await _persist();
+
+    if (!persisted || !updatedHabit.hasReminder) {
+      return;
+    }
+
+    await _reminderScheduler.scheduleHabitReminder(updatedHabit);
   }
 
   /// Removes an existing habit and persists the result.
   Future<void> removeHabit(String habitId) async {
+    final existingCount = _habits.length;
     _habits.removeWhere((habit) => habit.id == habitId);
+    final removedAny = _habits.length < existingCount;
     notifyListeners();
-    await _persist();
+    final persisted = await _persist();
+
+    if (persisted && removedAny) {
+      await _reminderScheduler.cancelHabitReminder(habitId);
+    }
   }
 
-  Future<void> _persist() async {
+  Future<bool> _persist() async {
     try {
       _errorMessage = null;
       await _storage.saveHabits(_habits);
+      notifyListeners();
+
+      return true;
     } catch (_) {
       _errorMessage = 'Nie udało się zapisać zmian.';
-    }
+      notifyListeners();
 
-    notifyListeners();
+      return false;
+    }
   }
 
   void _scheduleDayRolloverTick() {
@@ -168,6 +218,7 @@ class HomeController extends ChangeNotifier {
         return;
       }
 
+      unawaited(_reminderScheduler.syncHabitReminders(_habits));
       notifyListeners();
       _scheduleDayRolloverTick();
     });

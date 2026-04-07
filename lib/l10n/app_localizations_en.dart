@@ -78,6 +78,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get habitDescriptionHint => 'Optional notes for this habit';
 
   @override
+  String get habitReminderLabel => 'Daily reminder';
+
+  @override
+  String get habitReminderDescription => 'Get a local notification every day.';
+
+  @override
+  String habitReminderTime(String time) {
+    return 'Reminder time: $time';
+  }
+
+  @override
   String get habitIconLabel => 'Icon';
 
   @override

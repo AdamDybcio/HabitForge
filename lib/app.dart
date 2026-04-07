@@ -11,6 +11,7 @@ import 'package:habit_forge/core/theme/app_theme.dart';
 import 'package:habit_forge/core/widgets/responsive_app_frame.dart';
 import 'package:habit_forge/l10n/app_localizations.dart';
 import 'package:habit_forge/services/habit_local_storage_service.dart';
+import 'package:habit_forge/services/local_notifications_service.dart';
 import 'package:habit_forge/views/app_loading_screen.dart';
 import 'package:habit_forge/views/main_navigation_screen.dart';
 import 'package:habit_forge/views/onboarding_screen.dart';
@@ -28,6 +29,7 @@ class HabitForgeApp extends StatelessWidget {
         ChangeNotifierProvider<HomeController>(
           create: (_) => HomeController(
             storage: HabitLocalStorageService(),
+            reminderScheduler: LocalNotificationsService(),
           )..initialize(),
         ),
         ChangeNotifierProvider<NavigationController>(

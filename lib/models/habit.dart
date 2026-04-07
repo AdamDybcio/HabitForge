@@ -18,8 +18,30 @@ class Habit extends Equatable {
   /// List of dates when the habit was completed.
   final List<DateTime> completedDays;
 
+  /// Whether a daily reminder is enabled for this habit.
+  final bool reminderEnabled;
+
+  /// Reminder hour in 24-hour format.
+  final int? reminderHour;
+
+  /// Reminder minute.
+  final int? reminderMinute;
+
   @override
-  List<Object?> get props => [id, name, description, iconName, completedDays];
+  List<Object?> get props => [
+    id,
+    name,
+    description,
+    iconName,
+    completedDays,
+    reminderEnabled,
+    reminderHour,
+    reminderMinute,
+  ];
+
+  /// Whether this habit has a valid reminder configuration.
+  bool get hasReminder =>
+      reminderEnabled && reminderHour != null && reminderMinute != null;
 
   /// Creates a new [Habit] instance.
   const Habit({
@@ -28,6 +50,9 @@ class Habit extends Equatable {
     required this.completedDays,
     this.description = '',
     this.iconName = 'task_alt',
+    this.reminderEnabled = false,
+    this.reminderHour,
+    this.reminderMinute,
   });
 
   /// Creates a habit from a JSON map.
@@ -53,6 +78,9 @@ class Habit extends Equatable {
       description: (json['description'] as String?) ?? '',
       iconName: (json['iconName'] as String?) ?? 'task_alt',
       completedDays: days,
+      reminderEnabled: (json['reminderEnabled'] as bool?) ?? false,
+      reminderHour: json['reminderHour'] as int?,
+      reminderMinute: json['reminderMinute'] as int?,
     );
   }
 
@@ -63,6 +91,10 @@ class Habit extends Equatable {
     String? description,
     String? iconName,
     List<DateTime>? completedDays,
+    bool? reminderEnabled,
+    int? reminderHour,
+    int? reminderMinute,
+    bool clearReminderTime = false,
   }) {
     return Habit(
       id: id ?? this.id,
@@ -70,6 +102,13 @@ class Habit extends Equatable {
       description: description ?? this.description,
       iconName: iconName ?? this.iconName,
       completedDays: completedDays ?? this.completedDays,
+      reminderEnabled: reminderEnabled ?? this.reminderEnabled,
+      reminderHour: clearReminderTime
+          ? null
+          : reminderHour ?? this.reminderHour,
+      reminderMinute: clearReminderTime
+          ? null
+          : reminderMinute ?? this.reminderMinute,
     );
   }
 
@@ -83,6 +122,9 @@ class Habit extends Equatable {
       'completedDays': completedDays
           .map((date) => date.toIso8601String())
           .toList(),
+      'reminderEnabled': reminderEnabled,
+      'reminderHour': reminderHour,
+      'reminderMinute': reminderMinute,
     };
   }
 

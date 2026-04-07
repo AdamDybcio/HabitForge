@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
 import 'package:habit_forge/core/theme/colors.dart';
 
 /// Empty state shown when there are no habits yet.
@@ -14,6 +15,7 @@ class HomeEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = appL10n(context);
 
     return Center(
       child: Container(
@@ -40,12 +42,12 @@ class HomeEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'No habits yet',
+              l10n.noHabitsYetTitle,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Text(
-              'Start with one tiny routine and build your daily momentum.',
+              l10n.noHabitsYetDescription,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
@@ -55,7 +57,7 @@ class HomeEmptyState extends StatelessWidget {
             FilledButton.icon(
               onPressed: onCreate,
               icon: const Icon(Icons.add),
-              label: const Text('Create first habit'),
+              label: Text(l10n.createFirstHabit),
             ),
           ],
         ),

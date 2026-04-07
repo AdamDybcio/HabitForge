@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:habit_forge/controllers/home_controller.dart';
+import 'package:habit_forge/controllers/locale_controller.dart';
 import 'package:habit_forge/controllers/navigation_controller.dart';
 import 'package:habit_forge/controllers/theme_controller.dart';
 import 'package:habit_forge/core/theme/app_theme.dart';
+import 'package:habit_forge/l10n/app_localizations.dart';
 import 'package:habit_forge/views/main_navigation_screen.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:provider/provider.dart';
@@ -30,10 +33,21 @@ void main() {
           ChangeNotifierProvider<ThemeController>(
             create: (_) => ThemeController(),
           ),
+          ChangeNotifierProvider<LocaleController>(
+            create: (_) => LocaleController(),
+          ),
         ],
         child: MaterialApp(
+          locale: const Locale('en'),
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           home: const MainNavigationScreen(),
         ),
       ),

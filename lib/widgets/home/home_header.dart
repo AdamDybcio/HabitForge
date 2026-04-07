@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:habit_forge/controllers/locale_controller.dart';
 import 'package:habit_forge/controllers/theme_controller.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
 import 'package:habit_forge/core/theme/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +17,9 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = context.watch<ThemeController>();
+    final localeController = context.watch<LocaleController>();
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = appL10n(context);
 
     return Row(
       children: [
@@ -48,9 +52,41 @@ class HomeHeader extends StatelessWidget {
             ),
           ),
         ),
+        PopupMenuButton<Locale>(
+          tooltip: l10n.changeLanguageTooltip,
+          onSelected: localeController.setLocale,
+          itemBuilder: (_) {
+            return [
+              PopupMenuItem<Locale>(
+                value: const Locale('en'),
+                child: Text(l10n.languageEnglish),
+              ),
+              PopupMenuItem<Locale>(
+                value: const Locale('pl'),
+                child: Text(l10n.languagePolish),
+              ),
+            ];
+          },
+          child: Container(
+            width: 34,
+            height: 34,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerLow,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Text(
+              localeController.locale.languageCode.toUpperCase(),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
         IconButton(
           onPressed: themeController.toggleTheme,
-          tooltip: 'Change theme',
+          tooltip: l10n.changeThemeTooltip,
           icon: Icon(
             themeController.isDarkMode
                 ? Icons.light_mode_outlined

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
 import 'package:habit_forge/core/helpers/habit_icon_catalog.dart';
 import 'package:habit_forge/core/theme/colors.dart';
 import 'package:habit_forge/models/habit.dart';
@@ -35,6 +36,7 @@ class HabitListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = appL10n(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final deleteActionColor = isDarkMode
         ? colorScheme.error
@@ -73,7 +75,7 @@ class HabitListItem extends StatelessWidget {
               AnimatedStreakBadge(streak: streak),
               const SizedBox(width: 6),
               PopupMenuButton<_HabitAction>(
-                tooltip: 'Habit actions',
+                tooltip: l10n.habitActionsTooltip,
                 surfaceTintColor: Colors.transparent,
                 color: colorScheme.surfaceContainerLowest,
                 shape: const RoundedRectangleBorder(
@@ -100,7 +102,7 @@ class HabitListItem extends StatelessWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           const SizedBox(width: 10),
-                          const Text('Edit'),
+                          Text(l10n.editAction),
                         ],
                       ),
                     ),
@@ -114,7 +116,7 @@ class HabitListItem extends StatelessWidget {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            'Delete',
+                            l10n.deleteAction,
                             style: isDarkMode
                                 ? TextStyle(color: deleteActionColor)
                                 : null,
@@ -157,7 +159,7 @@ class HabitListItem extends StatelessWidget {
           Row(
             children: [
               Text(
-                isDoneToday ? 'Completed today' : 'Tap to complete',
+                isDoneToday ? l10n.completedToday : l10n.tapToComplete,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: isDoneToday
                       ? colorScheme.secondary

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:habit_forge/l10n/app_localizations.dart';
 import 'package:habit_forge/models/habit.dart';
 import 'package:habit_forge/widgets/profile/profile_selected_day_panel.dart';
 
@@ -8,6 +10,14 @@ void main() {
 
   Widget wrap(Widget child) {
     return MaterialApp(
+      locale: const Locale('en'),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(body: child),
     );
   }

@@ -1,0 +1,102 @@
+{
+  "@@locale": "pl",
+  "appHomeTab": "Start",
+  "appProfileTab": "Profil",
+  "changeThemeTooltip": "Zmień motyw",
+  "changeLanguageTooltip": "Zmień język",
+  "languageEnglish": "Angielski",
+  "languagePolish": "Polski",
+  "dailyMomentumTitle": "Dzisiejszy impet",
+  "noHabitsYetTitle": "Brak nawyków",
+  "noHabitsYetDescription": "Zacznij od jednego małego nawyku i buduj codzienną regularność.",
+  "createFirstHabit": "Utwórz pierwszy nawyk",
+  "completionPercentLabel": "{percent}% ukończono",
+  "@completionPercentLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "createHabitTitle": "Utwórz nawyk",
+  "editHabitTitle": "Edytuj nawyk",
+  "habitNameRequiredError": "Nazwa jest wymagana",
+  "creatingHabit": "Tworzenie...",
+  "savingHabit": "Zapisywanie...",
+  "saveChanges": "Zapisz zmiany",
+  "createHabit": "Utwórz nawyk",
+  "habitNameLabel": "Nazwa",
+  "habitNameHint": "np. Pij wodę",
+  "habitDescriptionLabel": "Opis",
+  "habitDescriptionHint": "Opcjonalne notatki do tego nawyku",
+  "habitIconLabel": "Ikona",
+  "habitActionsTooltip": "Akcje nawyku",
+  "editAction": "Edytuj",
+  "deleteAction": "Usuń",
+  "completedToday": "Ukończono dziś",
+  "tapToComplete": "Dotknij, aby ukończyć",
+  "deleteHabitTitle": "Usunąć nawyk?",
+  "deleteHabitMessage": "To trwale usunie \"{habitName}\" z Twojej listy.",
+  "@deleteHabitMessage": {
+    "placeholders": {
+      "habitName": {
+        "type": "String"
+      }
+    }
+  },
+  "cancel": "Anuluj",
+  "profileTitle": "Profil",
+  "profileSubtitle": "Śledź regularność, przeglądaj historię i planuj kolejną serię.",
+  "statsToday": "Dzisiaj",
+  "statsHabitsDone": "Nawyki ukończone",
+  "statsCompletion": "Skuteczność",
+  "statsDailySuccess": "Dzienny wynik",
+  "statsAllTime": "Łącznie",
+  "statsCompletions": "Ukończenia",
+  "statsBestStreak": "Najlepsza seria",
+  "statsCurrentStreakMax": "Najdłuższa bieżąca seria",
+  "lastSevenDays": "Ostatnie 7 dni",
+  "weeklyTooltip": "{day}\n{count} ukończono",
+  "@weeklyTooltip": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "legendCompletedHabitsPerDay": "Ukończone nawyki na dzień",
+  "legendTimelineLastSevenDays": "Oś pon.-niedz. (ostatnie 7 dni)",
+  "completedOnDay": "Ukończono dnia: {dayLabel}",
+  "@completedOnDay": {
+    "placeholders": {
+      "dayLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "noCompletedHabitsOnDay": "Brak ukończonych nawyków tego dnia.",
+  "iconLabelGeneral": "Ogólne",
+  "iconLabelHydration": "Nawodnienie",
+  "iconLabelMindfulness": "Uważność",
+  "iconLabelWorkout": "Trening",
+  "iconLabelReading": "Czytanie",
+  "iconLabelSleep": "Sen",
+  "iconLabelNutrition": "Odżywianie",
+  "iconLabelRunning": "Bieganie",
+  "iconLabelMusic": "Muzyka",
+  "iconLabelLearning": "Nauka",
+  "iconLabelFinance": "Finanse",
+  "iconLabelWellness": "Wellbeing",
+  "iconLabelHealth": "Zdrowie",
+  "iconLabelHygiene": "Higiena",
+  "iconLabelCoding": "Programowanie",
+  "iconLabelLanguage": "Język",
+  "iconLabelPetCare": "Opieka nad zwierzęciem",
+  "iconLabelNature": "Natura",
+  "iconLabelStyle": "Styl",
+  "iconLabelTravel": "Podróże",
+  "iconLabelNoSmoking": "Bez palenia"
+}

@@ -17,7 +17,8 @@ class ProfileCalendarHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final monthTitle = DateFormat('MMMM yyyy').format(focusedMonth);
+    final localeTag = Localizations.localeOf(context).toLanguageTag();
+    final monthTitle = DateFormat('MMMM yyyy', localeTag).format(focusedMonth);
 
     return Row(
       children: [

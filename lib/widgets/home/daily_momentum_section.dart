@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_forge/core/helpers/app_localizations_helper.dart';
 import 'package:habit_forge/widgets/home/components/animated_completion_progress.dart';
 import 'package:intl/intl.dart';
 
@@ -22,6 +23,7 @@ class DailyMomentumSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = appL10n(context);
     final localeTag = Localizations.localeOf(context).toLanguageTag();
     final formattedDate = DateFormat('EEEE, MMM d', localeTag).format(
       DateTime.now(),
@@ -40,7 +42,7 @@ class DailyMomentumSection extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          'Daily Momentum',
+          l10n.dailyMomentumTitle,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(height: 16),

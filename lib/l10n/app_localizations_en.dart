@@ -221,4 +221,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get iconLabelNoSmoking => 'No Smoking';
+
+  @override
+  String get onboardingTitle => 'Build momentum, one habit at a time';
+
+  @override
+  String get onboardingSubtitle =>
+      'HabitForge helps you stay consistent every day and grow streaks that matter.';
+
+  @override
+  String get onboardingPointConsistency => 'Track daily habits with one tap';
+
+  @override
+  String get onboardingPointProgress => 'See your progress on clear charts';
+
+  @override
+  String get onboardingPointFocus => 'Keep your routine simple and focused';
+
+  @override
+  String get onboardingGetStarted => 'Get started';
 }

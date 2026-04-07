@@ -505,6 +505,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Smoking'**
   String get iconLabelNoSmoking;
+
+  /// No description provided for @onboardingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Build momentum, one habit at a time'**
+  String get onboardingTitle;
+
+  /// No description provided for @onboardingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'HabitForge helps you stay consistent every day and grow streaks that matter.'**
+  String get onboardingSubtitle;
+
+  /// No description provided for @onboardingPointConsistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Track daily habits with one tap'**
+  String get onboardingPointConsistency;
+
+  /// No description provided for @onboardingPointProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'See your progress on clear charts'**
+  String get onboardingPointProgress;
+
+  /// No description provided for @onboardingPointFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your routine simple and focused'**
+  String get onboardingPointFocus;
+
+  /// No description provided for @onboardingGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onboardingGetStarted;
 }
 
 class _AppLocalizationsDelegate

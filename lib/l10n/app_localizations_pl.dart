@@ -221,4 +221,25 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get iconLabelNoSmoking => 'Bez palenia';
+
+  @override
+  String get onboardingTitle => 'Buduj regularność, jeden nawyk na raz';
+
+  @override
+  String get onboardingSubtitle =>
+      'HabitForge pomaga Ci codziennie trzymać rytm i rozwijać serie, które mają znaczenie.';
+
+  @override
+  String get onboardingPointConsistency =>
+      'Śledź codzienne nawyki jednym dotknięciem';
+
+  @override
+  String get onboardingPointProgress =>
+      'Sprawdzaj postępy na czytelnych wykresach';
+
+  @override
+  String get onboardingPointFocus => 'Utrzymuj prostą i skupioną rutynę';
+
+  @override
+  String get onboardingGetStarted => 'Zaczynaj';
 }

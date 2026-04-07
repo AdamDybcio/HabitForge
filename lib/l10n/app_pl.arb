@@ -29,6 +29,16 @@
   "habitNameHint": "np. Pij wodę",
   "habitDescriptionLabel": "Opis",
   "habitDescriptionHint": "Opcjonalne notatki do tego nawyku",
+  "habitReminderLabel": "Codzienne przypomnienie",
+  "habitReminderDescription": "Otrzymuj codziennie lokalne powiadomienie.",
+  "habitReminderTime": "Godzina przypomnienia: {time}",
+  "@habitReminderTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "habitIconLabel": "Ikona",
   "habitActionsTooltip": "Akcje nawyku",
   "editAction": "Edytuj",

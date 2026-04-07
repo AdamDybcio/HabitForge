@@ -230,6 +230,24 @@ abstract class AppLocalizations {
   /// **'Optional notes for this habit'**
   String get habitDescriptionHint;
 
+  /// No description provided for @habitReminderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get habitReminderLabel;
+
+  /// No description provided for @habitReminderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a local notification every day.'**
+  String get habitReminderDescription;
+
+  /// No description provided for @habitReminderTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder time: {time}'**
+  String habitReminderTime(String time);
+
   /// No description provided for @habitIconLabel.
   ///
   /// In en, this message translates to:

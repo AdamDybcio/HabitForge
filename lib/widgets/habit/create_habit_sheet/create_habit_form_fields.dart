@@ -3,4 +3,5 @@
 export 'fields/create_habit_sheet_title.dart';
 export 'fields/habit_description_field.dart';
 export 'fields/habit_name_field.dart';
+export 'fields/habit_reminder_controls.dart';
 export 'fields/submit_habit_button.dart';

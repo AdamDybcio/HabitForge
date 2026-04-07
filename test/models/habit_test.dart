@@ -7,6 +7,8 @@ void main() {
     const int twoDays = 2;
     const int threeDays = 3;
     const int fiveDays = 5;
+    const int reminderHour = 20;
+    const int reminderMinute = 30;
 
     test('streak counts consecutive days including today', () {
       final today = DateTime.now();
@@ -111,6 +113,10 @@ void main() {
 
       expect(habit.description, '');
       expect(habit.iconName, 'task_alt');
+      expect(habit.reminderEnabled, isFalse);
+      expect(habit.reminderHour, isNull);
+      expect(habit.reminderMinute, isNull);
+      expect(habit.hasReminder, isFalse);
     });
 
     test('toJson and fromJson keep all fields', () {
@@ -121,6 +127,9 @@ void main() {
         description: 'Drink 2L of water',
         iconName: 'water_drop',
         completedDays: [today],
+        reminderEnabled: true,
+        reminderHour: reminderHour,
+        reminderMinute: reminderMinute,
       );
 
       final encoded = habit.toJson();
@@ -132,6 +141,10 @@ void main() {
       expect(decoded.iconName, habit.iconName);
       expect(decoded.completedDays.length, habit.completedDays.length);
       expect(decoded.completedDays.first.isAtSameMomentAs(today), true);
+      expect(decoded.reminderEnabled, isTrue);
+      expect(decoded.reminderHour, reminderHour);
+      expect(decoded.reminderMinute, reminderMinute);
+      expect(decoded.hasReminder, isTrue);
     });
   });
 }
